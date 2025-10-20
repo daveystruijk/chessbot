@@ -12,7 +12,7 @@ const app = new App({
   socketMode: true,
 });
 
-app.event('message', async ({ message }) => {
+app.event('message', async ({ message, say }) => {
   if (message.subtype || !message.text) {
     return;
   }
@@ -21,9 +21,11 @@ app.event('message', async ({ message }) => {
   logger.info(action);
 
   if (action.action === 'displayLeaderboard') {
-    await displayLeaderboard(action);
+    const response = await displayLeaderboard(action);
+    say(response);
   } else if (action.action === 'recordGameResult') {
-    await recordGameResult(action);
+    const response = await recordGameResult(action);
+    say(response);
   }
 });
 
