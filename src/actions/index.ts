@@ -1,9 +1,8 @@
+import { EntityManager } from '@mikro-orm/postgresql';
 import { SayArguments } from '@slack/bolt';
-import { EntityManager } from 'joist-orm';
-import { Winner } from '../entities/entities.js';
 
 export type Action =
-  | { action: 'recordGameResult'; playerAId: string; playerBId: string; winner: Winner }
+  | { action: 'recordGameResult'; playerAId: string; playerBId: string; winner: 'playerA' | 'playerB' | 'draw' }
   | { action: 'displayLeaderboard' };
 
 export type ActionHandler<A extends Action['action']> = (
