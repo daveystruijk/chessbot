@@ -1,8 +1,10 @@
 import { App } from '@slack/bolt';
+import { EntityManager } from 'joist-orm';
 import { displayLeaderboard } from './actions/displayLeaderboard.js';
+import { Action } from './actions/index.js';
 import { recordGameResult } from './actions/recordGameResult.js';
 import { config } from './config.js';
-import { logger } from './logger.js';
+import { getEntityManager } from './database.js';
 import { parseMessage } from './messageParser.js';
 
 const app = new App({
@@ -12,21 +14,25 @@ const app = new App({
   socketMode: true,
 });
 
+const performAction = async (action: Action, entities: EntityManager) => {
+  if (action.action === 'displayLeaderboard') {
+    return displayLeaderboard(action, entities);
+  } else if (action.action === 'recordGameResult') {
+    return recordGameResult(action, entities);
+  }
+  return 'Unrecognized action';
+};
+
 app.event('message', async ({ message, say }) => {
   if (message.subtype || !message.text) {
     return;
   }
 
   const action = parseMessage(message.text);
-  logger.info(action);
-
-  if (action.action === 'displayLeaderboard') {
-    const response = await displayLeaderboard(action);
-    say(response);
-  } else if (action.action === 'recordGameResult') {
-    const response = await recordGameResult(action);
-    say(response);
-  }
+  const entities = getEntityManager();
+  const response = await performAction(action, entities);
+  entities.flush();
+  say(response);
 });
 
 await app.start();

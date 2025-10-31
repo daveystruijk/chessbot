@@ -1,0 +1,14 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_USER=chessbot
+      - POSTGRES_PASSWORD=chessbot
+      - POSTGRES_DB=chessbot
+      - PGDATA=/data/postgres
+    volumes:
+      - ./db:/data/postgres
+    ports:
+      - 127.0.0.1:8432:5432
+    restart: unless-stopped

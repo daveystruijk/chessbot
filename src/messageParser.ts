@@ -1,25 +1,35 @@
 import { abc, choice, many1, map, middle, or, parse, Parser } from 'peberminta';
 import { anyOf, concat, str } from 'peberminta/char';
 import { Action } from './actions/index.js';
+import { Winner } from './entities/entities.js';
 
 export const alphanumeric = concat(many1(anyOf('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ')));
 export const userIdentifier = middle(str('<@'), alphanumeric, str('>'));
 
 export const winWords = choice(str(' won against '), str(' won vs '), str(' won from '));
-export const winResult = abc(userIdentifier, winWords, userIdentifier, (winner, _, loser) => ({
-  winner,
-  loser,
+export const winResult = abc(userIdentifier, winWords, userIdentifier, (playerAId, _, playerBId) => ({
+  playerAId,
+  playerBId,
+  winner: Winner.PlayerA,
 }));
 
 export const lossWords = choice(str(' lost against '), str(' lost vs '), str(' lost from '));
-export const lossResult = abc(userIdentifier, lossWords, userIdentifier, (loser, _, winner) => ({
-  winner,
-  loser,
+export const lossResult = abc(userIdentifier, lossWords, userIdentifier, (playerAId, _, playerBId) => ({
+  playerAId,
+  playerBId,
+  winner: Winner.PlayerB,
+}));
+
+export const drawWords = choice(str(' ties against '), str(' ties vs '));
+export const drawResult = abc(userIdentifier, drawWords, userIdentifier, (playerAId, _, playerBId) => ({
+  playerAId,
+  playerBId,
+  winner: Winner.Draw,
 }));
 
 export const recordGameResult: Parser<string, unknown, Action> = map(
   or(winResult, lossResult),
-  ({ winner, loser }) => ({ action: 'recordGameResult', winner, loser }),
+  ({ playerAId, playerBId, winner }) => ({ action: 'recordGameResult', playerAId, playerBId, winner }),
 );
 
 export const displayLeaderboard: Parser<string, unknown, Action> = map(str('leaderboard'), () => ({
