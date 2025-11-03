@@ -39,12 +39,10 @@ export const recordDraw: Parser<string, unknown, Action> = abc(
   }),
 );
 
-export const recordGameResult: Parser<string, unknown, Action> = or(recordWin, recordLoss, recordDraw);
-
 export const displayLeaderboard: Parser<string, unknown, Action> = map(str('leaderboard'), () => ({
   action: 'displayLeaderboard',
 }));
 
-export const action = or(recordGameResult, displayLeaderboard);
+export const action = or(recordWin, recordLoss, recordDraw, displayLeaderboard);
 
 export const parseMessage = (message: string): Action => parse(action, [...message], {});
