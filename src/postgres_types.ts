@@ -15,7 +15,7 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type Winner = "draw" | "player_a" | "player_b";
 
-export interface GameResults {
+export interface Matches {
   created_at: Generated<Timestamp>;
   id: Generated<number>;
   player_a_id: string;
@@ -38,7 +38,7 @@ export interface Players {
 }
 
 export interface DB {
-  game_results: GameResults;
+  matches: Matches;
   pgmigrations: Pgmigrations;
   players: Players;
 }

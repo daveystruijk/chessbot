@@ -7,7 +7,7 @@ export const userId = middle(str('<@'), alphanumeric, str('>'));
 
 export const winWords = choice(str(' won against '), str(' won vs '), str(' won from '));
 export const recordWin: Parser<string, unknown, Action> = abc(userId, winWords, userId, (playerAId, _, playerBId) => ({
-  action: 'recordGameResult',
+  action: 'recordMatch',
   playerAId,
   playerBId,
   winner: 'playerA',
@@ -19,7 +19,7 @@ export const recordLoss: Parser<string, unknown, Action> = abc(
   lossWords,
   userId,
   (playerAId, _, playerBId) => ({
-    action: 'recordGameResult',
+    action: 'recordMatch',
     playerAId,
     playerBId,
     winner: 'playerB',
@@ -32,7 +32,7 @@ export const recordDraw: Parser<string, unknown, Action> = abc(
   drawWords,
   userId,
   (playerAId, _, playerBId) => ({
-    action: 'recordGameResult',
+    action: 'recordMatch',
     playerAId,
     playerBId,
     winner: 'draw',

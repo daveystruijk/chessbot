@@ -10,7 +10,7 @@ CREATE TABLE players (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE game_results (
+CREATE TABLE matches (
   id SERIAL PRIMARY KEY,
   player_a_id VARCHAR(255) NOT NULL REFERENCES players(player_id) DEFERRABLE INITIALLY DEFERRED,
   player_b_id VARCHAR(255) NOT NULL REFERENCES players(player_id) DEFERRABLE INITIALLY DEFERRED,
@@ -20,6 +20,6 @@ CREATE TABLE game_results (
 
 -- Down Migration
 
-DROP TABLE game_results;
+DROP TABLE matches;
 DROP TABLE players;
 DROP TYPE winner;
