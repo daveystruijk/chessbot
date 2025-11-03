@@ -30,13 +30,13 @@ describe(import.meta.filename, () => {
   test('valid recordWin', () => {
     const input = '<@A> won from <@B>';
     const result = tryParse(recordWin, [...input], {});
-    expect(result).toEqual({ action: 'recordMatch', playerAId: 'A', playerBId: 'B', winner: 'playerA' });
+    expect(result).toEqual({ action: 'recordMatch', playerAId: 'A', playerBId: 'B', winner: 'player_a' });
   });
 
   test('valid recordLoss', () => {
     const input = '<@A> lost vs <@B>';
     const result = tryParse(recordLoss, [...input], {});
-    expect(result).toEqual({ action: 'recordMatch', playerAId: 'A', playerBId: 'B', winner: 'playerB' });
+    expect(result).toEqual({ action: 'recordMatch', playerAId: 'A', playerBId: 'B', winner: 'player_b' });
   });
 
   test('valid recordDraw', () => {

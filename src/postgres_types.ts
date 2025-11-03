@@ -9,8 +9,6 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
-export type Numeric = ColumnType<string, number | string, number | string>;
-
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type Winner = "draw" | "player_a" | "player_b";
@@ -34,7 +32,7 @@ export interface Players {
   id: Generated<number>;
   player_id: string;
   player_name: string | null;
-  score: Numeric;
+  score: number;
 }
 
 export interface DB {

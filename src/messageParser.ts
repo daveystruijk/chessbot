@@ -10,7 +10,7 @@ export const recordWin: Parser<string, unknown, Action> = abc(userId, winWords, 
   action: 'recordMatch',
   playerAId,
   playerBId,
-  winner: 'playerA',
+  winner: 'player_a',
 }));
 
 export const lossWords = choice(str(' lost against '), str(' lost vs '), str(' lost from '));
@@ -22,7 +22,7 @@ export const recordLoss: Parser<string, unknown, Action> = abc(
     action: 'recordMatch',
     playerAId,
     playerBId,
-    winner: 'playerB',
+    winner: 'player_b',
   }),
 );
 

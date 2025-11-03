@@ -1,24 +1,26 @@
+import { Winner } from '../postgres_types.js';
+
 const kFactor = 15;
 
 export const calculateRanking = ({
-  playerA,
-  playerB,
+  scoreA,
+  scoreB,
   winner,
 }: {
-  playerA: number;
-  playerB: number;
-  winner: 'playerA' | 'playerB' | 'draw';
-}): { playerA: number; playerB: number } => {
-  const expectation = 1 / (1 + Math.pow(10, (playerB - playerA) / 400));
+  scoreA: number;
+  scoreB: number;
+  winner: Winner;
+}): { scoreA: number; scoreB: number } => {
+  const expectation = 1 / (1 + Math.pow(10, (scoreB - scoreA) / 400));
 
   const result = {
-    playerA: 1,
+    player_a: 1,
     draw: 0.5,
-    playerB: 0,
+    player_b: 0,
   }[winner];
 
   return {
-    playerA: playerA + kFactor * (result - expectation),
-    playerB: playerB + kFactor * (expectation - result),
+    scoreA: scoreA + kFactor * (result - expectation),
+    scoreB: scoreB + kFactor * (expectation - result),
   };
 };
