@@ -25,8 +25,6 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
     await playerRepository.updateScore(t, { playerId: playerAId, score: scoreA });
     await playerRepository.updateScore(t, { playerId: playerBId, score: scoreB });
 
-    return {
-      blocks: [{ type: 'section' }],
-    };
+    return ['Updated scores:', `- ${playerA.player_name}: ${scoreA}`, `- ${playerB.player_name}: ${scoreB}`].join('\n');
   });
 };

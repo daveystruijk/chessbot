@@ -6,7 +6,7 @@ CREATE TABLE players (
   id SERIAL PRIMARY KEY,
   player_id VARCHAR(255) NOT NULL UNIQUE,
   player_name VARCHAR(255),
-  score INTEGER NOT NULL,
+  score FLOAT8 NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
