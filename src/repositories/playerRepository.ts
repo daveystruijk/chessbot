@@ -2,6 +2,8 @@ import { Transaction } from 'kysely';
 import { DB } from '../postgres_types.js';
 
 export const playerRepository = {
+  getAll: async (t: Transaction<DB>) => t.selectFrom('players').selectAll().execute(),
+
   findOrCreate: async (t: Transaction<DB>, { playerId, playerName }: { playerId: string; playerName: string }) =>
     t
       .insertInto('players')

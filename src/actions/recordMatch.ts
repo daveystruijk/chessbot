@@ -16,7 +16,7 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
     const playerB = await playerRepository.findOrCreate(t, { playerId: playerBId, playerName: playerBName });
 
     // Record match result
-    t.insertInto('matches').values({ player_a_id: playerAId, player_b_id: playerBId, winner });
+    await t.insertInto('matches').values({ player_a_id: playerAId, player_b_id: playerBId, winner }).execute();
 
     // Calculate scores
     const { scoreA, scoreB } = calculateRanking({ scoreA: playerA.score, scoreB: playerB.score, winner });
@@ -25,6 +25,10 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
     await playerRepository.updateScore(t, { playerId: playerAId, score: scoreA });
     await playerRepository.updateScore(t, { playerId: playerBId, score: scoreB });
 
-    return ['Updated scores:', `- ${playerA.player_name}: ${scoreA}`, `- ${playerB.player_name}: ${scoreB}`].join('\n');
+    return [
+      'Updated scores:',
+      `- ${playerA.player_name}: ${scoreA.toFixed(0)}`,
+      `- ${playerB.player_name}: ${scoreB.toFixed(0)}`,
+    ].join('\n');
   });
 };
