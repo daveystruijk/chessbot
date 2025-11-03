@@ -24,8 +24,6 @@ describe(import.meta.filename, async () => {
 
     const { playerA, playerB } = calculateRanking(input);
 
-    console.log();
-
     expect(playerA).toBeCloseTo(2000);
     expect(playerB).toBeCloseTo(500);
   });
