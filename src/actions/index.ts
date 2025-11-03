@@ -6,5 +6,4 @@ export type Action =
 
 export type ActionHandler<A extends Action['action']> = (
   action: { action: A } & Action,
-  entities: EntityManager,
 ) => Promise<string | SayArguments>;
