@@ -8,13 +8,15 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "migrate": "env-cmd node-pg-migrate"
+    "migrate": "env-cmd node-pg-migrate",
+    "generate:types": "kysely-codegen --out-file src/postgres_types.ts"
   },
   "dependencies": {
     "@slack/bolt": "^4.5.0",
     "dotenv": "^17.2.3",
     "joist-orm": "^1.282.1",
     "knex": "^3.1.0",
+    "kysely": "^0.28.8",
     "peberminta": "^0.10.0",
     "pg": "^8.16.3",
     "pino": "^10.1.0",
@@ -30,6 +32,7 @@
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.4.0",
+    "kysely-codegen": "^0.19.0",
     "node-pg-migrate": "^8.0.3",
     "prettier": "^3.6.2",
     "tsx": "^4.20.6",

@@ -1,4 +1,3 @@
-import { EntityManager } from '@mikro-orm/postgresql';
 import { SayArguments } from '@slack/bolt';
 
 export type Action =

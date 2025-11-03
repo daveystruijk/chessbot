@@ -4,7 +4,6 @@ import { displayLeaderboard } from './actions/displayLeaderboard.js';
 import { Action } from './actions/index.js';
 import { recordGameResult } from './actions/recordGameResult.js';
 import { config } from './config.js';
-import { getEntityManager } from './database.js';
 import { parseMessage } from './messageParser.js';
 
 const app = new App({

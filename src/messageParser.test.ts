@@ -28,14 +28,14 @@ describe(import.meta.filename, () => {
   });
 
   test('valid winResult', () => {
-    const input = '<@WINNER> won from <@LOSER>';
+    const input = '<@A> won from <@B>';
     const result = tryParse(winResult, [...input], {});
-    expect(result).toEqual({ winner: 'WINNER', loser: 'LOSER' });
+    expect(result).toEqual({ playerAId: 'A', playerBId: 'B', winner: 'playerA' });
   });
 
   test('valid lossResult', () => {
-    const input = '<@LOSER> lost vs <@WINNER>';
+    const input = '<@A> lost vs <@B>';
     const result = tryParse(lossResult, [...input], {});
-    expect(result).toEqual({ winner: 'WINNER', loser: 'LOSER' });
+    expect(result).toEqual({ playerAId: 'A', playerBId: 'B', winner: 'playerB' });
   });
 });
