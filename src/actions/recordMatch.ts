@@ -11,10 +11,12 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
 
     // Find or update players
     const playerAName = await slackRepository.getUsername(client, { userId: playerAId });
-    const playerA = await playerRepository.findOrCreate(t, { playerId: playerAId, playerName: playerAName });
+    await playerRepository.findOrCreate(t, { playerId: playerAId, playerName: playerAName });
+    const playerA = await playerRepository.find(t, { playerId: playerAId });
 
     const playerBName = await slackRepository.getUsername(client, { userId: playerBId });
-    const playerB = await playerRepository.findOrCreate(t, { playerId: playerBId, playerName: playerBName });
+    await playerRepository.findOrCreate(t, { playerId: playerBId, playerName: playerBName });
+    const playerB = await playerRepository.find(t, { playerId: playerBId });
 
     // Record match result
     await t.insertInto('matches').values({ player_a_id: playerAId, player_b_id: playerBId, winner }).execute();
@@ -23,10 +25,14 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
     const { scoreA, scoreB } = calculateRanking({ scoreA: playerA.score, scoreB: playerB.score, winner });
 
     // Persist scores
-    const updatedPlayerA = await playerRepository.updateScore(t, { playerId: playerAId, score: scoreA });
-    const updatedPlayerB = await playerRepository.updateScore(t, { playerId: playerBId, score: scoreB });
+    await playerRepository.updateScore(t, { playerId: playerAId, score: scoreA });
+    await playerRepository.updateScore(t, { playerId: playerBId, score: scoreB });
 
-    // Output table to slack
+    // Retrieve new player rankings
+    const updatedPlayerA = await playerRepository.find(t, { playerId: playerAId });
+    const updatedPlayerB = await playerRepository.find(t, { playerId: playerBId });
+
+    // Output table (with diffs) to slack
     const table = [
       {
         ...updatedPlayerA,
