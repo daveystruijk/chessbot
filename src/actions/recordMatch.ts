@@ -1,9 +1,19 @@
+import { Selectable } from 'kysely';
 import { db } from '../database.js';
+import { Matches } from '../postgres_types.js';
+import { matchRepository } from '../repositories/matchRepository.js';
 import { playerRepository } from '../repositories/playerRepository.js';
 import { slackRepository } from '../repositories/slackRepository.js';
-import { formatPlayerTable } from '../utils/formatting.js';
+import { formatContext, formatPlayerTable } from '../utils/formatting.js';
 import { calculateRanking } from '../utils/ranking.js';
 import { ActionHandler } from './index.js';
+
+const countWins = ({ matches, playerId }: { matches: Selectable<Matches>[]; playerId: string }) =>
+  matches.filter(
+    (match) =>
+      (match.player_a_id === playerId && match.winner === 'player_a') ||
+      (match.player_b_id === playerId && match.winner === 'player_b'),
+  ).length;
 
 export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client }) => {
   return db.transaction().execute(async (t) => {
@@ -19,7 +29,7 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
     const playerB = await playerRepository.find(t, { playerId: playerBId });
 
     // Record match result
-    await t.insertInto('matches').values({ player_a_id: playerAId, player_b_id: playerBId, winner }).execute();
+    await matchRepository.create(t, { player_a_id: playerAId, player_b_id: playerBId, winner });
 
     // Calculate scores
     const { scoreA, scoreB } = calculateRanking({ scoreA: playerA.score, scoreB: playerB.score, winner });
@@ -31,6 +41,14 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
     // Retrieve new player rankings
     const updatedPlayerA = await playerRepository.find(t, { playerId: playerAId });
     const updatedPlayerB = await playerRepository.find(t, { playerId: playerBId });
+
+    // Retrieve context between players
+    const matches = await matchRepository.findBetweenPlayers(t, {
+      player_a_id: playerAId,
+      player_b_id: playerBId,
+    });
+    const playerAWins = countWins({ matches, playerId: playerAId });
+    const playerBWins = countWins({ matches, playerId: playerBId });
 
     // Output table (with diffs) to slack
     const table = [
@@ -46,6 +64,13 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
       },
     ].sort((player) => player.rank);
 
-    return formatPlayerTable(table);
+    return {
+      blocks: [
+        formatPlayerTable(table),
+        formatContext(
+          `*${playerA.player_name}* and *${playerB.player_name}* played ${playerAWins}-${playerBWins} in total (${matches.length} games)`,
+        ),
+      ],
+    };
   });
 };

@@ -6,6 +6,6 @@ import { ActionHandler } from './index.js';
 export const displayLeaderboard: ActionHandler<'displayLeaderboard'> = async (action, entities) => {
   return db.transaction().execute(async (t) => {
     const players = await playerRepository.getAll(t);
-    return formatPlayerTable(players);
+    return { blocks: [formatPlayerTable(players)] };
   });
 };

@@ -1,5 +1,5 @@
 import { FunctionModule, Transaction } from 'kysely';
-import { DB, Players } from '../postgres_types.js';
+import { DB } from '../postgres_types.js';
 
 const withRank = ({ fn }: { fn: FunctionModule<DB, 'players'> }) =>
   fn

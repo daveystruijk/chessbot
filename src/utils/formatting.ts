@@ -1,5 +1,4 @@
-import { SayArguments } from '@slack/bolt';
-import { RichTextBlock, RichTextStyleable } from '@slack/types';
+import { ContextBlock, RichTextBlock, RichTextStyleable, TableBlock } from '@slack/types';
 
 type PlayerRow = {
   player_name: string | null;
@@ -9,7 +8,7 @@ type PlayerRow = {
   oldScore?: number;
 };
 
-export const cell = ({ text, style }: { text: string; style?: RichTextStyleable['style'] }): RichTextBlock => ({
+const cell = ({ text, style }: { text: string; style?: RichTextStyleable['style'] }): RichTextBlock => ({
   type: 'rich_text',
   elements: [
     {
@@ -41,18 +40,24 @@ export const formatPlayerRow = ({ player_name, rank, score, oldRank, oldScore }:
   ];
 };
 
-export const formatPlayerTable = (rows: PlayerRow[]): SayArguments => ({
-  blocks: [
+export const formatPlayerTable = (rows: PlayerRow[]): TableBlock => ({
+  type: 'table',
+  rows: [
+    [
+      cell({ text: 'Rank', style: { bold: true } }),
+      cell({ text: 'Player', style: { bold: true } }),
+      cell({ text: 'Score', style: { bold: true } }),
+    ],
+    ...rows.map(formatPlayerRow),
+  ],
+});
+
+export const formatContext = (text: string): ContextBlock => ({
+  type: 'context',
+  elements: [
     {
-      type: 'table',
-      rows: [
-        [
-          cell({ text: 'Rank', style: { bold: true } }),
-          cell({ text: 'Player', style: { bold: true } }),
-          cell({ text: 'Score', style: { bold: true } }),
-        ],
-        ...rows.map(formatPlayerRow),
-      ],
+      type: 'mrkdwn',
+      text,
     },
   ],
 });
