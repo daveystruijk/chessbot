@@ -1,6 +1,7 @@
 import { db } from '../database.js';
 import { playerRepository } from '../repositories/playerRepository.js';
 import { slackRepository } from '../repositories/slackRepository.js';
+import { formatPlayerTable } from '../utils/formatting.js';
 import { calculateRanking } from '../utils/ranking.js';
 import { ActionHandler } from './index.js';
 
@@ -22,13 +23,23 @@ export const recordMatch: ActionHandler<'recordMatch'> = async (action, { client
     const { scoreA, scoreB } = calculateRanking({ scoreA: playerA.score, scoreB: playerB.score, winner });
 
     // Persist scores
-    await playerRepository.updateScore(t, { playerId: playerAId, score: scoreA });
-    await playerRepository.updateScore(t, { playerId: playerBId, score: scoreB });
+    const updatedPlayerA = await playerRepository.updateScore(t, { playerId: playerAId, score: scoreA });
+    const updatedPlayerB = await playerRepository.updateScore(t, { playerId: playerBId, score: scoreB });
 
-    return [
-      'Updated scores:',
-      `- ${playerA.player_name}: ${scoreA.toFixed(0)}`,
-      `- ${playerB.player_name}: ${scoreB.toFixed(0)}`,
-    ].join('\n');
+    // Output table to slack
+    const table = [
+      {
+        ...updatedPlayerA,
+        oldRank: playerA.rank,
+        oldScore: playerA.score,
+      },
+      {
+        ...updatedPlayerB,
+        oldRank: playerB.rank,
+        oldScore: playerB.score,
+      },
+    ].sort((player) => player.rank);
+
+    return formatPlayerTable(table);
   });
 };

@@ -725,15 +725,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@slack/bolt@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "@slack/bolt@npm:4.5.0"
+"@slack/bolt@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "@slack/bolt@npm:4.6.0"
   dependencies:
     "@slack/logger": "npm:^4.0.0"
     "@slack/oauth": "npm:^3.0.4"
     "@slack/socket-mode": "npm:^2.0.5"
-    "@slack/types": "npm:^2.17.0"
-    "@slack/web-api": "npm:^7.11.0"
+    "@slack/types": "npm:^2.18.0"
+    "@slack/web-api": "npm:^7.12.0"
     axios: "npm:^1.12.0"
     express: "npm:^5.0.0"
     path-to-regexp: "npm:^8.1.0"
@@ -741,7 +741,7 @@ __metadata:
     tsscmp: "npm:^1.0.6"
   peerDependencies:
     "@types/express": ^5.0.0
-  checksum: 10c0/7622953156ab163827d5b756475d83a431b696ab583de08a0cd8f6be0fc51e1c82540d33dcd9114c0d058eb52d381b3b661f864f9a6998cffdc72019cf9fcaa2
+  checksum: 10c0/c4f07568cd6ac7489b8c168d0a4efd07591475fb35d62de602dd82989243df26b1f9adb082294749306e3abdeceb425aef3b731ddcd1207a5ca698213cac6b2c
   languageName: node
   linkType: hard
 
@@ -788,7 +788,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@slack/web-api@npm:^7.10.0, @slack/web-api@npm:^7.11.0":
+"@slack/types@npm:^2.18.0, @slack/types@npm:^2.19.0":
+  version: 2.19.0
+  resolution: "@slack/types@npm:2.19.0"
+  checksum: 10c0/a6a552e23836a31dc848bc641bc88ac3bf211ec47847c4bb8cd050183ef75af3cdaa3390256ac4ef1e291c16d232c76b816804ff993b5c2368a5f7e220241131
+  languageName: node
+  linkType: hard
+
+"@slack/web-api@npm:^7.10.0":
   version: 7.11.0
   resolution: "@slack/web-api@npm:7.11.0"
   dependencies:
@@ -805,6 +812,26 @@ __metadata:
     p-retry: "npm:^4"
     retry: "npm:^0.13.1"
   checksum: 10c0/3d63b7d02b8ba107aa5d07090b3f83887ad35bf78c4c9561b175a96fcabab3bf5e77a46675571e1bb2f8aca708c259d92a78b4061d3aa788f4892aa09b9c4e8a
+  languageName: node
+  linkType: hard
+
+"@slack/web-api@npm:^7.12.0":
+  version: 7.12.0
+  resolution: "@slack/web-api@npm:7.12.0"
+  dependencies:
+    "@slack/logger": "npm:^4.0.0"
+    "@slack/types": "npm:^2.18.0"
+    "@types/node": "npm:>=18.0.0"
+    "@types/retry": "npm:0.12.0"
+    axios: "npm:^1.11.0"
+    eventemitter3: "npm:^5.0.1"
+    form-data: "npm:^4.0.4"
+    is-electron: "npm:2.2.2"
+    is-stream: "npm:^2"
+    p-queue: "npm:^6"
+    p-retry: "npm:^4"
+    retry: "npm:^0.13.1"
+  checksum: 10c0/3b40863c93a6530d9f8a27f23e3f5fa2388e10a3eab140fe8bf554a67c38b5265d052db45d6fee5624ce879e494ea47a9d019f8b9061572eae1deae636bfc802
   languageName: node
   linkType: hard
 
@@ -1444,7 +1471,8 @@ __metadata:
   resolution: "chessbot@workspace:."
   dependencies:
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.7.0"
-    "@slack/bolt": "npm:^4.5.0"
+    "@slack/bolt": "npm:^4.6.0"
+    "@slack/types": "npm:^2.19.0"
     "@tsconfig/node24": "npm:^24.0.1"
     "@types/node": "npm:^24.8.1"
     "@types/pg": "npm:^8"

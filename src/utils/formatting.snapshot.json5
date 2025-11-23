@@ -1,0 +1,194 @@
+{
+  "blocks": [
+    {
+      "rows": [
+        [
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "style": {
+                      "bold": true,
+                    },
+                    "text": "Rank",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "style": {
+                      "bold": true,
+                    },
+                    "text": "Player",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "style": {
+                      "bold": true,
+                    },
+                    "text": "Score",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+        ],
+        [
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "1.",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "Magnus Carsten",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "3000",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+        ],
+        [
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "2.",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "Danny Kasparov",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "2900",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+        ],
+        [
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "3. (-2)",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "Anish Bierie",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+          {
+            "elements": [
+              {
+                "elements": [
+                  {
+                    "text": "2891 (-111)",
+                    "type": "text",
+                  },
+                ],
+                "type": "rich_text_section",
+              },
+            ],
+            "type": "rich_text",
+          },
+        ],
+      ],
+      "type": "table",
+    },
+  ],
+}

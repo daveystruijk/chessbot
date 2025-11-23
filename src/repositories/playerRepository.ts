@@ -1,8 +1,10 @@
-import { Transaction } from 'kysely';
+import { FunctionModule, Transaction } from 'kysely';
 import { DB } from '../postgres_types.js';
 
+const withRank = ({ fn }: { fn: FunctionModule<DB, 'players'> }) => fn.agg<number>('rank').over().as('rank');
+
 export const playerRepository = {
-  getAll: async (t: Transaction<DB>) => t.selectFrom('players').selectAll().execute(),
+  getAll: async (t: Transaction<DB>) => t.selectFrom('players').selectAll().select(withRank).execute(),
 
   findOrCreate: async (t: Transaction<DB>, { playerId, playerName }: { playerId: string; playerName: string }) =>
     t
@@ -18,8 +20,15 @@ export const playerRepository = {
         }),
       )
       .returningAll()
+      .returning(withRank)
       .executeTakeFirstOrThrow(),
 
   updateScore: async (t: Transaction<DB>, { playerId, score }: { playerId: string; score: number }) =>
-    t.updateTable('players').set({ score }).where('player_id', '=', playerId).execute(),
+    t
+      .updateTable('players')
+      .set({ score })
+      .where('player_id', '=', playerId)
+      .returningAll()
+      .returning(withRank)
+      .executeTakeFirstOrThrow(),
 };
